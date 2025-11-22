@@ -37,9 +37,11 @@
 
         <div class="nav-group">
             <div class="nav-header">Curriculum</div>
-            <a href="undergrad.html" class="nav-link">Undergraduate</a>
+            <a href="undergrad.html" class="nav-link active">Undergraduate</a>
             <a href="grad.html" class="nav-link">Graduate</a>
             <a href="phd.html" class="nav-link">PhD / Research</a>
+            <a href="#resources" class="nav-link">Resources</a>
+            <a href="#code-lab" class="nav-link">Code Lab</a>
         </div>
 
         <div class="nav-group">
@@ -53,38 +55,218 @@
             <h1>Undergraduate Studies</h1>
             <p class="hero-subtitle">Foundational concepts in Astrodynamics and Relativity.</p>
 
-            <section id="orbital-mechanics">
-                <h2>Orbital Mechanics</h2>
-                <p>At the undergraduate level, we move beyond simple Keplerian orbits to understand the dynamics of
-                    spacecraft maneuvering.</p>
+            <section id="core-curriculum">
+                <h2>Part 1: The Core Curriculum (The "Big Three")</h2>
+                <p>A comparative look at how the giants of aerospace education approach the fundamentals.</p>
 
-                <h3>The Vis-Viva Equation</h3>
-                <p>The fundamental equation governing the motion of orbiting bodies is the Vis-Viva equation, derived
-                    from the conservation of energy:</p>
-                <div class="math-block">
-                    $$ v^2 = GM \left( \frac{2}{r} - \frac{1}{a} \right) $$
-                </div>
-                <p>Where $v$ is the relative speed, $r$ is the distance between the two bodies, $a$ is the semi-major
-                    axis, $G$ is the gravitational constant, and $M$ is the mass of the central body.</p>
+                <h3>1. MIT (Course 16: AeroAstro)</h3>
+                <p><strong>Focus:</strong> The "Unified Engineering" approach—teaching fluids, structures, and signals
+                    simultaneously.</p>
+                <ul>
+                    <li><strong>16.001 – 16.004 Unified Engineering I-IV</strong>:
+                        <ul>
+                            <li><em>Materials & Structures:</em> Statics, trusses, stress-strain, beam bending, failure
+                                modes.</li>
+                            <li><em>Signals & Systems:</em> Linear systems, Fourier/Laplace transforms, feedback
+                                control.</li>
+                            <li><em>Fluid Dynamics:</em> Conservation laws, compressible flow, shock waves, wing
+                                aerodynamics.</li>
+                            <li><em>Thermodynamics & Propulsion:</em> Brayton cycles, heat transfer, jet engine
+                                performance.</li>
+                        </ul>
+                    </li>
+                    <li><strong>16.07 Dynamics</strong>: Particle dynamics, orbital mechanics, rigid body kinematics.
+                    </li>
+                    <li><strong>16.410 Principles of Autonomy</strong>: Reason-based AI, path planning (A*), constraint
+                        satisfaction.</li>
+                </ul>
 
-                <h3>Hohmann Transfer</h3>
-                <p>The most energy-efficient transfer between two coplanar circular orbits is the Hohmann transfer
-                    ellipse. The delta-v required is the sum of two impulsive burns:</p>
-                <div class="math-block">
-                    $$ \Delta v_{total} = \Delta v_1 + \Delta v_2 $$
-                    $$ \Delta v_1 = \sqrt{\frac{GM}{r_1}} \left( \sqrt{\frac{2r_2}{r_1+r_2}} - 1 \right) $$
-                </div>
+                <h3>2. Stanford University (Aero/Astro Major)</h3>
+                <p><strong>Focus:</strong> Flexible "Tracks" allowing early specialization in Space vs. Aviation.</p>
+                <ul>
+                    <li><strong>AA 100 Intro to Aeronautics and Astronautics</strong>: Physics of flight and space
+                        survey.</li>
+                    <li><strong>AA 102 Applied Aerodynamics</strong>: Airfoil theory, compressibility, viscous flow.
+                    </li>
+                    <li><strong>AA 103 Air and Space Propulsion</strong>: Rocket equation, nozzle design,
+                        turbomachinery.</li>
+                    <li><strong>AA 279A Space Mechanics</strong>: Orbits, J2 perturbation, Gauss's variational
+                        equations.</li>
+                    <li><strong>AA 115Q The Global Positioning System</strong>: GPS signal processing and triangulation.
+                    </li>
+                    <li><strong>AA 120Q Building Trust in Autonomy</strong>: Safety-critical AI and human-robot
+                        interaction.</li>
+                </ul>
+
+                <h3>3. Caltech (Aerospace Minor/Focus)</h3>
+                <p><strong>Focus:</strong> Physics-first, highly theoretical and mathematical rigor.</p>
+                <ul>
+                    <li><strong>Ae 101 Fluid Mechanics</strong>: Navier-Stokes equations, vorticity, boundary layers.
+                    </li>
+                    <li><strong>Ae 102 Solid Mechanics</strong>: Elasticity, plasticity, wave propagation.</li>
+                    <li><strong>Ae 103 Aerospace Control Systems</strong>: State-space control, stability analysis,
+                        robust control.</li>
+                    <li><strong>Ae 105 Space Engineering</strong>: Mission design, astrodynamics, spacecraft subsystems.
+                    </li>
+                    <li><strong>Ae 121 Space Propulsion</strong>: Electric propulsion (Hall thrusters), chemical
+                        rockets, plasma physics.</li>
+                </ul>
             </section>
 
-            <section id="special-relativity">
-                <h2>Special Relativity</h2>
-                <p>Introduced by Einstein in 1905, Special Relativity fundamentally changed our understanding of space
-                    and time. The invariant interval $ds^2$ is given by:</p>
-                <div class="math-block">
-                    $$ ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 = \eta_{\mu\nu} dx^\mu dx^\nu $$
+            <section id="resources">
+                <h2>Part 2: Deep Dive & Open Source Labs</h2>
+                <p>Match the curriculum topics with the best open-source repositories.</p>
+
+                <h3>A. Astrodynamics & Orbit Design</h3>
+                <p><em>Curriculum Match: MIT 16.07, Stanford AA 279A, Caltech Ae 105</em></p>
+                <ul>
+                    <li><strong>The "Gold Standard" Repo:</strong> <a href="https://github.com/alfonsogonzalez/AWP"
+                            target="_blank">alfonsogonzalez/AWP</a>
+                        <br><em>Description:</em> "Astrodynamics with Python". Covers Keplerian orbits, J2 perturbation,
+                        interplanetary transfers.
+                    </li>
+                </ul>
+
+                <h3>B. Navigation & GPS</h3>
+                <p><em>Curriculum Match: Stanford AA 115Q, AA 272</em></p>
+                <ul>
+                    <li><strong>The "Stanford" Repo:</strong> <a href="https://github.com/Stanford-NavLab/gnss_lib_py"
+                            target="_blank">Stanford-NavLab/gnss_lib_py</a>
+                        <br><em>Description:</em> Official tool from Stanford's NavLab. Parses GNSS data, calculates
+                        state estimates.
+                    </li>
+                </ul>
+
+                <h3>C. Control Systems & Autonomy</h3>
+                <p><em>Curriculum Match: MIT 16.30, Caltech Ae 103</em></p>
+                <ul>
+                    <li><strong>The "Implementation" Repo:</strong> <a
+                            href="https://github.com/python-control/python-control"
+                            target="_blank">python-control/python-control</a>
+                        <br><em>Description:</em> Standard Python library for feedback control systems (Bode plots,
+                        State-Space analysis).
+                    </li>
+                </ul>
+
+                <h3>D. Unified Engineering</h3>
+                <p><em>Curriculum Match: MIT 16.001–16.004</em></p>
+                <ul>
+                    <li><strong>The "Resource" Repo:</strong> <a
+                            href="https://ocw.mit.edu/courses/16-001-unified-engineering-i-ii-iii-iv-fall-2005-spring-2006/"
+                            target="_blank">MIT OpenCourseWare</a>
+                        <br><em>Description:</em> Problem sets and lecture notes for the legendary Unified Engineering
+                        course.
+                    </li>
+                </ul>
+            </section>
+
+            <section id="code-lab">
+                <h2>Part 3: Code Lab - The Vis-Viva Equation</h2>
+                <p>Verify your orbital mechanics knowledge by calculating the velocity of a spacecraft at a specific
+                    radius.</p>
+
+                <div class="code-block">
+                    <pre><code>
+def vis_viva_solver(r, a, mu=398600):
+    """
+    Calculate orbital velocity.
+    r: Current distance from center of Earth (km)
+    a: Semi-major axis of orbit (km)
+    mu: Standard gravitational parameter for Earth (km^3/s^2)
+    """
+    import math
+    v = math.sqrt(mu * ((2/r) - (1/a)))
+    return v
+
+# Example: Low Earth Orbit (LEO)
+velocity = vis_viva_solver(r=6771, a=6771)
+print(f"Orbital Velocity: {velocity:.2f} km/s")
+                    </code></pre>
                 </div>
-                <p>Where $\eta_{\mu\nu} = \text{diag}(-1, 1, 1, 1)$ is the Minkowski metric. This leads to time dilation
-                    and length contraction.</p>
+                <p class="caption">Try implementing this in Python to solve Problem Set 1 from MIT 16.07!</p>
+
+                <div class="interactive-calculator">
+                    <h3>Interactive Check</h3>
+                    <div class="input-group">
+                        <label for="radius">Radius (r) [km]:</label>
+                        <input type="number" id="radius" value="6771">
+                    </div>
+                    <div class="input-group">
+                        <label for="semi-major">Semi-major Axis (a) [km]:</label>
+                        <input type="number" id="semi-major" value="6771">
+                    </div>
+                    <button onclick="calculateVisViva()">Calculate Velocity</button>
+                    <div id="result" class="result-display">Result: </div>
+                </div>
+
+                <script>
+                    function calculateVisViva() {
+                        const r = parseFloat(document.getElementById('radius').value);
+                        const a = parseFloat(document.getElementById('semi-major').value);
+                        const mu = 398600; // Earth's gravitational parameter
+
+                        if (r > 0 && a > 0) {
+                            const v = Math.sqrt(mu * ((2 / r) - (1 / a)));
+                            document.getElementById('result').innerText = `Orbital Velocity: ${v.toFixed(2)} km/s`;
+                        } else {
+                            document.getElementById('result').innerText = "Please enter valid positive numbers.";
+                        }
+                    }
+                </script>
+
+                <style>
+                    .interactive-calculator {
+                        background: rgba(255, 255, 255, 0.05);
+                        padding: 20px;
+                        border-radius: 8px;
+                        margin-top: 20px;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+
+                    .input-group {
+                        margin-bottom: 15px;
+                    }
+
+                    .input-group label {
+                        display: block;
+                        margin-bottom: 5px;
+                        font-family: 'Space Mono', monospace;
+                        font-size: 0.9rem;
+                    }
+
+                    .input-group input {
+                        width: 100%;
+                        padding: 8px;
+                        background: rgba(0, 0, 0, 0.3);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        color: white;
+                        font-family: 'Space Mono', monospace;
+                        border-radius: 4px;
+                    }
+
+                    button {
+                        background: #fff;
+                        color: #000;
+                        border: none;
+                        padding: 10px 20px;
+                        font-family: 'Space Mono', monospace;
+                        cursor: pointer;
+                        font-weight: bold;
+                        border-radius: 4px;
+                        transition: background 0.2s;
+                    }
+
+                    button:hover {
+                        background: #ccc;
+                    }
+
+                    .result-display {
+                        margin-top: 15px;
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        color: #4a9eff;
+                    }
+                </style>
             </section>
         </div>
     </main>
