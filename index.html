@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceWiki | Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="sidebar">
+        <a href="index.html" class="logo">
+            <span>✦</span> SpaceWiki
+        </a>
+
+        <div class="nav-group">
+            <div class="nav-header">Curriculum</div>
+            <a href="undergrad.html" class="nav-link">Undergraduate</a>
+            <a href="grad.html" class="nav-link">Graduate</a>
+            <a href="phd.html" class="nav-link">PhD / Research</a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-header">Special Reports</div>
+            <a href="ai_aerospace.html" class="nav-link">Autonomous Horizons (AI)</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-text">
+                <h1>The Universe,<br>Decoded.</h1>
+                <p class="hero-subtitle">A comprehensive compendium for advanced astrodynamics, general relativity, and
+                    the future of AI in aerospace.</p>
+            </div>
+            <div id="sim-canvas"></div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="grid">
+                <a href="undergrad.html" class="card">
+                    <span class="tag">Fundamentals</span>
+                    <h3>Undergraduate Studies</h3>
+                    <p>Master the basics of orbital mechanics, Hohmann transfers, and Special Relativity.</p>
+                </a>
+                <a href="grad.html" class="card">
+                    <span class="tag">Advanced</span>
+                    <h3>Graduate Studies</h3>
+                    <p>Dive into General Relativity, Perturbation Theory, and Black Hole Thermodynamics.</p>
+                </a>
+                <a href="phd.html" class="card">
+                    <span class="tag">Research</span>
+                    <h3>PhD & Research</h3>
+                    <p>Explore the frontiers of Cosmology, Quantum Field Theory, and Numerical Relativity.</p>
+                </a>
+                <a href="ai_aerospace.html" class="card" style="border-color: var(--accent-secondary);">
+                    <span class="tag">New Report</span>
+                    <h3>Autonomous Horizons</h3>
+                    <p>The operationalization of Artificial Intelligence in Aerospace (2024–2025).</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initBackground } from './main.js';
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // --- Hero Simulation (Black Hole) ---
+        const simContainer = document.getElementById('sim-canvas');
+        const simRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        simRenderer.setSize(simContainer.clientWidth, simContainer.clientHeight);
+        simContainer.appendChild(simRenderer.domElement);
+
+        const simScene = new THREE.Scene();
+        const simCamera = new THREE.PerspectiveCamera(45, simContainer.clientWidth / simContainer.clientHeight, 0.1, 1000);
+        simCamera.position.set(0, 3, 8);
+
+        const controls = new OrbitControls(simCamera, simRenderer.domElement);
+        controls.enableDamping = true;
+        controls.enableZoom = false;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.5;
+
+        // Black Hole Sphere
+        const bhGeometry = new THREE.SphereGeometry(1, 64, 64);
+        const bhMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        const blackHole = new THREE.Mesh(bhGeometry, bhMaterial);
+        simScene.add(blackHole);
+
+        // Accretion Disk
+        const diskGeometry = new THREE.RingGeometry(1.2, 4, 128);
+        const diskMaterial = new THREE.ShaderMaterial({
+            uniforms: { time: { value: 0 } },
+            side: THREE.DoubleSide,
+            transparent: true,
+            vertexShader: `
+                varying vec2 vUv;
+                varying vec3 vPos;
+                void main() {
+                    vUv = uv;
+                    vPos = position;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform float time;
+                varying vec2 vUv;
+                varying vec3 vPos;
+                float random(vec2 st) { return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123); }
+                void main() {
+                    float r = length(vPos.xy);
+                    float angle = atan(vPos.y, vPos.x);
+                    float spiral = angle + r * 4.0 - time * 1.5;
+                    float noise = sin(spiral * 10.0) * 0.5 + 0.5;
+                    vec3 color = mix(vec3(0.8, 0.1, 0.2), vec3(0.0, 0.8, 1.0), (4.0 - r) / 2.8);
+                    float alpha = smoothstep(1.2, 1.5, r) * smoothstep(4.0, 3.0, r);
+                    gl_FragColor = vec4(color * noise, alpha * 0.8);
+                }
+            `
+        });
+        const disk = new THREE.Mesh(diskGeometry, diskMaterial);
+        disk.rotation.x = -Math.PI / 2.5;
+        simScene.add(disk);
+
+        function animateSim() {
+            requestAnimationFrame(animateSim);
+            diskMaterial.uniforms.time.value += 0.01;
+            controls.update();
+            simRenderer.render(simScene, simCamera);
+        }
+        animateSim();
+
+        window.addEventListener('resize', () => {
+            simCamera.aspect = simContainer.clientWidth / simContainer.clientHeight;
+            simCamera.updateProjectionMatrix();
+            simRenderer.setSize(simContainer.clientWidth, simContainer.clientHeight);
+        });
+    </script>
+</body>
+
+</html>

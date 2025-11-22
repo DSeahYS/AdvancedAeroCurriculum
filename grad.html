@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceWiki | Graduate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="sidebar">
+        <a href="index.html" class="logo">
+            <span>✦</span> SpaceWiki
+        </a>
+
+        <div class="nav-group">
+            <div class="nav-header">Curriculum</div>
+            <a href="undergrad.html" class="nav-link">Undergraduate</a>
+            <a href="grad.html" class="nav-link">Graduate</a>
+            <a href="phd.html" class="nav-link">PhD / Research</a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-header">Special Reports</div>
+            <a href="ai_aerospace.html" class="nav-link">Autonomous Horizons (AI)</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="content-wrapper">
+            <h1>Graduate Studies</h1>
+            <p class="hero-subtitle">Advanced General Relativity and Perturbation Theory.</p>
+
+            <section id="general-relativity">
+                <h2>General Relativity</h2>
+                <p>General Relativity (GR) describes gravity not as a force, but as the curvature of spacetime caused by
+                    mass and energy.</p>
+
+                <h3>Einstein Field Equations</h3>
+                <p>The core of GR is a set of ten nonlinear partial differential equations:</p>
+                <div class="math-block">
+                    $$ R_{\mu\nu} - \frac{1}{2}Rg_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu} $$
+                </div>
+                <div class="note">
+                    <div class="note-title">Tensor Components</div>
+                    <ul>
+                        <li>$R_{\mu\nu}$: Ricci Curvature Tensor</li>
+                        <li>$R$: Ricci Scalar</li>
+                        <li>$g_{\mu\nu}$: Metric Tensor</li>
+                        <li>$\Lambda$: Cosmological Constant</li>
+                        <li>$T_{\mu\nu}$: Stress-Energy Tensor</li>
+                    </ul>
+                </div>
+
+                <h3>The Schwarzschild Metric</h3>
+                <p>The first exact solution to the EFE, describing the geometry outside a spherical, non-rotating mass:
+                </p>
+                <div class="math-block">
+                    $$ ds^2 = -\left(1-\frac{r_s}{r}\right)c^2dt^2 + \left(1-\frac{r_s}{r}\right)^{-1}dr^2 +
+                    r^2d\Omega^2 $$
+                </div>
+                <p>Where $r_s = \frac{2GM}{c^2}$ is the Schwarzschild radius.</p>
+            </section>
+
+            <section id="perturbation-theory">
+                <h2>Perturbation Theory in Astrodynamics</h2>
+                <p>Real orbits are never perfectly Keplerian due to non-spherical central bodies, atmospheric drag, and
+                    third-body effects. We use the Lagrange Planetary Equations to model these variations.</p>
+                <h3>J2 Perturbation</h3>
+                <p>The Earth's oblateness (J2 term) causes the regression of the ascending node ($\Omega$) and the
+                    precession of the argument of perigee ($\omega$):</p>
+                <div class="math-block">
+                    $$ \dot{\Omega} = -\frac{3}{2} J_2 \left(\frac{R_E}{p}\right)^2 n \cos i $$
+                    $$ \dot{\omega} = \frac{3}{4} J_2 \left(\frac{R_E}{p}\right)^2 n (5 \cos^2 i - 1) $$
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

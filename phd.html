@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceWiki | PhD / Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="sidebar">
+        <a href="index.html" class="logo">
+            <span>✦</span> SpaceWiki
+        </a>
+
+        <div class="nav-group">
+            <div class="nav-header">Curriculum</div>
+            <a href="undergrad.html" class="nav-link">Undergraduate</a>
+            <a href="grad.html" class="nav-link">Graduate</a>
+            <a href="phd.html" class="nav-link">PhD / Research</a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-header">Special Reports</div>
+            <a href="ai_aerospace.html" class="nav-link">Autonomous Horizons (AI)</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="content-wrapper">
+            <h1>PhD & Research</h1>
+            <p class="hero-subtitle">Cosmology, Quantum Gravity, and Numerical Relativity.</p>
+
+            <section id="cosmology">
+                <h2>FLRW Cosmology</h2>
+                <p>The Friedmann-Lemaître-Robertson-Walker (FLRW) metric describes a homogeneous, isotropic, expanding
+                    universe. The dynamics of the scale factor $a(t)$ are governed by the Friedmann equations:</p>
+                <div class="math-block">
+                    $$ H^2 = \left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3}\rho - \frac{kc^2}{a^2} + \frac{\Lambda
+                    c^2}{3} $$
+                    $$ \frac{\ddot{a}}{a} = -\frac{4\pi G}{3}\left(\rho + \frac{3p}{c^2}\right) + \frac{\Lambda c^2}{3}
+                    $$
+                </div>
+                <p>Current research focuses on the $\Lambda$CDM model, where Dark Energy ($\Lambda$) dominates the
+                    energy density of the universe today.</p>
+            </section>
+
+            <section id="qft-curved">
+                <h2>Quantum Field Theory in Curved Spacetime</h2>
+                <p>At the PhD level, we study how quantum fields behave in non-Minkowskian backgrounds. A seminal result
+                    is Hawking Radiation.</p>
+                <h3>Bogoliubov Transformations</h3>
+                <p>The vacuum state is not invariant under general coordinate transformations. We relate creation and
+                    annihilation operators between two observers (e.g., at past null infinity and future null infinity)
+                    using Bogoliubov coefficients $\alpha$ and $\beta$:</p>
+                <div class="math-block">
+                    $$ \hat{b}_j = \sum_i (\alpha_{ji}^* \hat{a}_i - \beta_{ji}^* \hat{a}_i^\dagger) $$
+                </div>
+                <p>If $\beta_{ji} \neq 0$, the vacuum of one observer contains particles as seen by the other. For a
+                    black hole, this leads to a thermal spectrum with temperature:</p>
+                <div class="math-block">
+                    $$ T_H = \frac{\hbar c^3}{8\pi G M k_B} $$
+                </div>
+            </section>
+
+            <section id="numerical-relativity">
+                <h2>Numerical Relativity</h2>
+                <p>Solving the Einstein Field Equations for complex systems (like binary black hole mergers) requires
+                    numerical simulations. The standard approach is the 3+1 decomposition (ADM Formalism).</p>
+                <p>The metric is decomposed into spatial metric $\gamma_{ij}$, lapse function $\alpha$, and shift vector
+                    $\beta^i$:</p>
+                <div class="math-block">
+                    $$ ds^2 = -\alpha^2 dt^2 + \gamma_{ij}(dx^i + \beta^i dt)(dx^j + \beta^j dt) $$
+                </div>
+                <p>This recasts the EFE into a Cauchy evolution problem, solvable on high-performance computing
+                    clusters.</p>
+            </section>
+        </div>
+    </main>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

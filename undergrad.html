@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceWiki | Undergraduate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="sidebar">
+        <a href="index.html" class="logo">
+            <span>✦</span> SpaceWiki
+        </a>
+
+        <div class="nav-group">
+            <div class="nav-header">Curriculum</div>
+            <a href="undergrad.html" class="nav-link">Undergraduate</a>
+            <a href="grad.html" class="nav-link">Graduate</a>
+            <a href="phd.html" class="nav-link">PhD / Research</a>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-header">Special Reports</div>
+            <a href="ai_aerospace.html" class="nav-link">Autonomous Horizons (AI)</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="content-wrapper">
+            <h1>Undergraduate Studies</h1>
+            <p class="hero-subtitle">Foundational concepts in Astrodynamics and Relativity.</p>
+
+            <section id="orbital-mechanics">
+                <h2>Orbital Mechanics</h2>
+                <p>At the undergraduate level, we move beyond simple Keplerian orbits to understand the dynamics of
+                    spacecraft maneuvering.</p>
+
+                <h3>The Vis-Viva Equation</h3>
+                <p>The fundamental equation governing the motion of orbiting bodies is the Vis-Viva equation, derived
+                    from the conservation of energy:</p>
+                <div class="math-block">
+                    $$ v^2 = GM \left( \frac{2}{r} - \frac{1}{a} \right) $$
+                </div>
+                <p>Where $v$ is the relative speed, $r$ is the distance between the two bodies, $a$ is the semi-major
+                    axis, $G$ is the gravitational constant, and $M$ is the mass of the central body.</p>
+
+                <h3>Hohmann Transfer</h3>
+                <p>The most energy-efficient transfer between two coplanar circular orbits is the Hohmann transfer
+                    ellipse. The delta-v required is the sum of two impulsive burns:</p>
+                <div class="math-block">
+                    $$ \Delta v_{total} = \Delta v_1 + \Delta v_2 $$
+                    $$ \Delta v_1 = \sqrt{\frac{GM}{r_1}} \left( \sqrt{\frac{2r_2}{r_1+r_2}} - 1 \right) $$
+                </div>
+            </section>
+
+            <section id="special-relativity">
+                <h2>Special Relativity</h2>
+                <p>Introduced by Einstein in 1905, Special Relativity fundamentally changed our understanding of space
+                    and time. The invariant interval $ds^2$ is given by:</p>
+                <div class="math-block">
+                    $$ ds^2 = -c^2dt^2 + dx^2 + dy^2 + dz^2 = \eta_{\mu\nu} dx^\mu dx^\nu $$
+                </div>
+                <p>Where $\eta_{\mu\nu} = \text{diag}(-1, 1, 1, 1)$ is the Minkowski metric. This leads to time dilation
+                    and length contraction.</p>
+            </section>
+        </div>
+    </main>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
