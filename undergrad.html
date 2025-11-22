@@ -24,6 +24,13 @@
     <!-- MathJax -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Pyodide -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+    <!-- CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
 </head>
 
 <body>
@@ -163,11 +170,105 @@
             <section id="code-lab">
                 <h2>Part 3: Code Lab - The Vis-Viva Equation</h2>
                 <p>Verify your orbital mechanics knowledge by calculating the velocity of a spacecraft at a specific
-                    radius.</p>
+                    radius. This environment runs <strong>real Python code</strong> directly in your browser!</p>
 
-                <div class="code-block">
-                    <pre><code>
-def vis_viva_solver(r, a, mu=398600):
+                <div class="codelab-container">
+                    <div id="editor-container"></div>
+                    <div class="controls">
+                        <button id="run-btn" onclick="runPython()">Run Code ▶</button>
+                        <div id="loading-indicator">Loading Python Environment...</div>
+                    </div>
+                    <div class="console-output">
+                        <div class="console-header">Console Output</div>
+                        <pre id="output"></pre>
+                    </div>
+                </div>
+
+                <style>
+                    .codelab-container {
+                        margin-top: 20px;
+                    }
+
+                    .CodeMirror {
+                        height: 300px;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        border: 1px solid #444;
+                    }
+
+                    .controls {
+                        margin: 10px 0;
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+                    }
+
+                    #run-btn {
+                        background: #28a745;
+                        color: white;
+                        border: none;
+                        padding: 10px 20px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        transition: background 0.2s;
+                    }
+
+                    #run-btn:hover {
+                        background: #218838;
+                    }
+
+                    #run-btn:disabled {
+                        background: #6c757d;
+                        cursor: not-allowed;
+                    }
+
+                    #loading-indicator {
+                        color: #aaa;
+                        font-style: italic;
+                        font-size: 0.9rem;
+                    }
+
+                    .console-output {
+                        background: #1e1e1e;
+                        color: #d4d4d4;
+                        border-radius: 4px;
+                        padding: 10px;
+                        font-family: 'Space Mono', monospace;
+                        min-height: 100px;
+                        border: 1px solid #333;
+                    }
+
+                    .console-header {
+                        color: #888;
+                        font-size: 0.8rem;
+                        margin-bottom: 5px;
+                        border-bottom: 1px solid #333;
+                        padding-bottom: 5px;
+                    }
+
+                    #output {
+                        margin: 0;
+                        white-space: pre-wrap;
+                    }
+
+                    .error {
+                        color: #ff6b6b;
+                    }
+
+                    .hidden {
+                        display: none;
+                    }
+                </style>
+
+                <script>
+                    let pyodideReadyPromise = loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/" });
+                    let editor;
+
+                    async function initCodeLab() {
+                        // Init CodeMirror
+                        editor = CodeMirror(document.getElementById("editor-container"), {
+                            value: `def vis_viva_solver(r, a, mu=398600):
     """
     Calculate orbital velocity.
     r: Current distance from center of Earth (km)
@@ -180,93 +281,49 @@ def vis_viva_solver(r, a, mu=398600):
 
 # Example: Low Earth Orbit (LEO)
 velocity = vis_viva_solver(r=6771, a=6771)
-print(f"Orbital Velocity: {velocity:.2f} km/s")
-                    </code></pre>
-                </div>
-                <p class="caption">Try implementing this in Python to solve Problem Set 1 from MIT 16.07!</p>
+print(f"Orbital Velocity: {velocity:.2f} km/s")`,
+                            mode: "python",
+                            theme: "monokai",
+                            lineNumbers: true
+                        });
 
-                <div class="interactive-calculator">
-                    <h3>Interactive Check</h3>
-                    <div class="input-group">
-                        <label for="radius">Radius (r) [km]:</label>
-                        <input type="number" id="radius" value="6771">
-                    </div>
-                    <div class="input-group">
-                        <label for="semi-major">Semi-major Axis (a) [km]:</label>
-                        <input type="number" id="semi-major" value="6771">
-                    </div>
-                    <button onclick="calculateVisViva()">Calculate Velocity</button>
-                    <div id="result" class="result-display">Result: </div>
-                </div>
+                        // Wait for Pyodide
+                        const btn = document.getElementById("run-btn");
+                        const loader = document.getElementById("loading-indicator");
 
-                <script>
-                    function calculateVisViva() {
-                        const r = parseFloat(document.getElementById('radius').value);
-                        const a = parseFloat(document.getElementById('semi-major').value);
-                        const mu = 398600; // Earth's gravitational parameter
+                        btn.disabled = true;
 
-                        if (r > 0 && a > 0) {
-                            const v = Math.sqrt(mu * ((2 / r) - (1 / a)));
-                            document.getElementById('result').innerText = `Orbital Velocity: ${v.toFixed(2)} km/s`;
-                        } else {
-                            document.getElementById('result').innerText = "Please enter valid positive numbers.";
+                        try {
+                            await pyodideReadyPromise;
+                            loader.innerText = "Python Ready!";
+                            setTimeout(() => loader.classList.add("hidden"), 2000);
+                            btn.disabled = false;
+                        } catch (err) {
+                            loader.innerText = "Failed to load Python: " + err;
+                            loader.classList.add("error");
                         }
                     }
+
+                    async function runPython() {
+                        const output = document.getElementById("output");
+                        output.innerHTML = ""; // Clear previous output
+                        const code = editor.getValue();
+
+                        try {
+                            let pyodide = await pyodideReadyPromise;
+
+                            // Redirect stdout
+                            pyodide.setStdout({ batched: (msg) => output.innerText += msg + "\n" });
+
+                            await pyodide.runPythonAsync(code);
+                        } catch (err) {
+                            output.innerHTML += `<span class="error">${err}</span>`;
+                        }
+                    }
+
+                    // Initialize on load
+                    window.addEventListener('DOMContentLoaded', initCodeLab);
                 </script>
-
-                <style>
-                    .interactive-calculator {
-                        background: rgba(255, 255, 255, 0.05);
-                        padding: 20px;
-                        border-radius: 8px;
-                        margin-top: 20px;
-                        border: 1px solid rgba(255, 255, 255, 0.1);
-                    }
-
-                    .input-group {
-                        margin-bottom: 15px;
-                    }
-
-                    .input-group label {
-                        display: block;
-                        margin-bottom: 5px;
-                        font-family: 'Space Mono', monospace;
-                        font-size: 0.9rem;
-                    }
-
-                    .input-group input {
-                        width: 100%;
-                        padding: 8px;
-                        background: rgba(0, 0, 0, 0.3);
-                        border: 1px solid rgba(255, 255, 255, 0.2);
-                        color: white;
-                        font-family: 'Space Mono', monospace;
-                        border-radius: 4px;
-                    }
-
-                    button {
-                        background: #fff;
-                        color: #000;
-                        border: none;
-                        padding: 10px 20px;
-                        font-family: 'Space Mono', monospace;
-                        cursor: pointer;
-                        font-weight: bold;
-                        border-radius: 4px;
-                        transition: background 0.2s;
-                    }
-
-                    button:hover {
-                        background: #ccc;
-                    }
-
-                    .result-display {
-                        margin-top: 15px;
-                        font-size: 1.2rem;
-                        font-weight: bold;
-                        color: #4a9eff;
-                    }
-                </style>
             </section>
         </div>
     </main>
